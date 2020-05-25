@@ -49,6 +49,7 @@ public class ParticipantApplication {
 			repository.findByLastName("Bauer").forEach(bauer -> log.info(bauer.toString()));
 
 			log.info("");
+			
 		};
 	}
 }
