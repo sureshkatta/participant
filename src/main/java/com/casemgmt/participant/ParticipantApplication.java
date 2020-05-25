@@ -12,7 +12,6 @@ import com.casemgmt.participant.jpa.ParticipantRepository;
 @SpringBootApplication
 public class ParticipantApplication {
 
-	
 	private static final Logger log = LoggerFactory.getLogger(ParticipantApplication.class);
 
 	public static void main(String[] args) {
