@@ -1,42 +1,72 @@
 package com.casemgmt.participant.entities;
 
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Participant {
 
-  @Id
-  @GeneratedValue(strategy=GenerationType.AUTO)
-  private Long id;
-  private String firstName;
-  private String lastName;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-  protected Participant() {}
+	@Column(nullable = false)
+	private String firstName;
+	@Column(nullable = false)
+	private String lastName;
 
-  public Participant(String firstName, String lastName) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-  }
+	private Date dateOfBirth;
 
-  @Override
-  public String toString() {
-    return String.format(
-        "Participant[id=%d, firstName='%s', lastName='%s']",
-        id, firstName, lastName);
-  }
+	@OneToMany(targetEntity = com.casemgmt.participant.entities.Address.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<Address> addresses;
 
-  public Long getId() {
-    return id;
-  }
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
 
-  public String getFirstName() {
-    return firstName;
-  }
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
 
-  public String getLastName() {
-    return lastName;
-  }
+	public List<Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
+	}
+
+	protected Participant() {
+	}
+
+	public Participant(String firstName, String lastName) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("Participant[id=%d, firstName='%s', lastName='%s']", id, firstName, lastName);
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
 }

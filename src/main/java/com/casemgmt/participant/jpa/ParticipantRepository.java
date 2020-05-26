@@ -8,6 +8,7 @@ import com.casemgmt.participant.entities.Participant;
 
 public interface ParticipantRepository extends CrudRepository<Participant, Long> {
 
+	List<Participant> findAll();
 	List<Participant> findByLastName(String lastName);
 
 	Participant findById(long id);
