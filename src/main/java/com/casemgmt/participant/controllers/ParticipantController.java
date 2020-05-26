@@ -37,11 +37,12 @@ public class ParticipantController {
 	@GetMapping("/participants/{id}")
 	public Participant getParticipant(@PathVariable long id) {
 		return Optional.ofNullable(repository.findById(id))
-			.orElseThrow(() -> new RuntimeException("Not Found"));
+			.orElseThrow(() -> new RuntimeException("Not Found" + id));
 	}
 	
-	@GetMapping("/participants/{name}")
-	public List<Participant> getAllParticipantsByName(@PathVariable String name) {
-		return repository.findByLastName(name);
-	}
+	/*
+	 * @GetMapping("/participants/{name}") public List<Participant>
+	 * getAllParticipantsByName(@PathVariable String name) { return
+	 * repository.findByLastName(name); }
+	 */
 }
