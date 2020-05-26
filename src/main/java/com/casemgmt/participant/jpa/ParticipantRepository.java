@@ -10,6 +10,7 @@ public interface ParticipantRepository extends CrudRepository<Participant, Long>
 
 	List<Participant> findAll();
 	List<Participant> findByLastName(String lastName);
-
+	List<Participant> findByAddresses_ZipCode(String zipCode);
+	
 	Participant findById(long id);
 }
