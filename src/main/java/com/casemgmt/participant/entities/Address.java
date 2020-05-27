@@ -1,11 +1,16 @@
 package com.casemgmt.participant.entities;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Version;
 
 @Entity
 public class Address {
@@ -20,13 +25,24 @@ public class Address {
 	private String state;
 	private String zipCode;
 
+	@Version
+	private int version;
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
 	/*
 	 * @ManyToOne(fetch = FetchType.LAZY) private Participant participant;
 	 */
 
-	public Address() {		
+	public Address() {
 	}
-	
+
 	public Address(String street1, String street2, String city, String state, String zipCode) {
 		this.street1 = street1;
 		this.street2 = street2;
@@ -34,14 +50,14 @@ public class Address {
 		this.state = state;
 		this.zipCode = zipCode;
 	}
-	
+
 	/*
 	 * public Participant getParticipant() { return participant; }
 	 * 
 	 * public void setParticipant(Participant participant) { this.participant =
 	 * participant; }
 	 */
-	
+
 	public String getStreet1() {
 		return street1;
 	}
@@ -80,5 +96,18 @@ public class Address {
 
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
+	}
+	
+	private Date createDateTime;
+	private Date updateDateTime;
+
+	@PrePersist
+	protected void onCreate() {
+		createDateTime = new Date();
+	}
+
+	@PreUpdate
+	protected void onUpdate() {
+		updateDateTime = new Date();
 	}
 }

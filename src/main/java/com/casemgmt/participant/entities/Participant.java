@@ -12,6 +12,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Version;
 
 @Entity
 public class Participant {
@@ -26,6 +29,17 @@ public class Participant {
 	private String lastName;
 
 	private Date dateOfBirth;
+
+	@Version
+	private int version;
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
 
 	@OneToMany(targetEntity = com.casemgmt.participant.entities.Address.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "participantId")
@@ -70,5 +84,18 @@ public class Participant {
 
 	public String getLastName() {
 		return lastName;
+	}
+
+	private Date createDateTime;
+	private Date updateDateTime;
+
+	@PrePersist
+	protected void onCreate() {
+		createDateTime = new Date();
+	}
+
+	@PreUpdate
+	protected void onUpdate() {
+		updateDateTime = new Date();
 	}
 }
