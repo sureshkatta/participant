@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -17,7 +18,7 @@ public class Participant {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Long participantId;
 
 	@Column(nullable = false)
 	private String firstName;
@@ -27,6 +28,7 @@ public class Participant {
 	private Date dateOfBirth;
 
 	@OneToMany(targetEntity = com.casemgmt.participant.entities.Address.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "participantId")
 	private List<Address> addresses;
 
 	public Date getDateOfBirth() {
@@ -45,7 +47,7 @@ public class Participant {
 		this.addresses = addresses;
 	}
 
-	protected Participant() {
+	public Participant() {
 	}
 
 	public Participant(String firstName, String lastName) {
@@ -55,11 +57,11 @@ public class Participant {
 
 	@Override
 	public String toString() {
-		return String.format("Participant[id=%d, firstName='%s', lastName='%s']", id, firstName, lastName);
+		return String.format("Participant[id=%d, firstName='%s', lastName='%s']", participantId, firstName, lastName);
 	}
 
-	public Long getId() {
-		return id;
+	public Long getParticipantId() {
+		return participantId;
 	}
 
 	public String getFirstName() {

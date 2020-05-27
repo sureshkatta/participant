@@ -21,9 +21,6 @@ public class ParticipantController {
 	@Autowired
 	ParticipantRepository repository;
 
-	private static final String template = "Hello, %s!";
-	private final AtomicLong counter = new AtomicLong();
-
 	@GetMapping("/participants")
 	public List<Participant> getAllParticipants() {
 		return repository.findAll();
@@ -34,10 +31,10 @@ public class ParticipantController {
 		return repository.save(newParticipant);
 	}
 
-	@GetMapping("/participants/{id}")
-	public Participant getParticipant(@PathVariable long id) {
-		return Optional.ofNullable(repository.findById(id))
-			.orElseThrow(() -> new RuntimeException("Not Found" + id));
+	@GetMapping("/participants/{participantId}")
+	public Participant getParticipant(@PathVariable long participantId) {
+		return Optional.ofNullable(repository.findByParticipantId(participantId))
+			.orElseThrow(() -> new RuntimeException("Not Found" + participantId));
 	}
 	
 	/*
