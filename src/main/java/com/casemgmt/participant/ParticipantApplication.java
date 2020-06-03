@@ -31,7 +31,8 @@ public class ParticipantApplication {
 	public CommandLineRunner demo(ParticipantRepository repository) {
 		return (args) -> {
 
-			Participant[] persons = IntStream.range(0, 15).mapToObj(i -> {
+			Participant[] persons = 
+			IntStream.range(0, 15).mapToObj(i -> {
 				Participant participant = new Participant("Jack" + i, "Bauer" + i);
 				List<Address> addresses = new ArrayList<>();
 				addresses.add(new Address(i + "01 Main", "Street", "Cary" + i, "NC", "23231"));
@@ -55,6 +56,8 @@ public class ParticipantApplication {
 				log.info(participant.toString());
 			}
 			log.info("");
+			
+			
 
 			// fetch an individual customer by ID
 			Participant participant = repository.findByParticipantId(1L);

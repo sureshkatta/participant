@@ -31,7 +31,8 @@ public class ParticipantController {
 
 	@GetMapping("/participants/{participantId}")
 	public Participant getParticipant(@PathVariable long participantId) {
-		return Optional.ofNullable(repository.findByParticipantId(participantId))
+		return Optional
+				.ofNullable(repository.findByParticipantId(participantId))
 				.orElseThrow(() -> new RuntimeException("Not Found" + participantId));
 	}
 
