@@ -12,13 +12,25 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Version;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.Accessors;
+
+@Getter
+@Setter
+@Accessors(chain = true)
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 @Entity
 public class Address {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long addressId;
-
 	private String street1;
 	private String street2;
 	private String city;
@@ -27,21 +39,12 @@ public class Address {
 
 	@Version
 	private int version;
-
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
-	}
+	private Date createDateTime;
+	private Date updateDateTime;
 
 	/*
 	 * @ManyToOne(fetch = FetchType.LAZY) private Participant participant;
 	 */
-
-	public Address() {
-	}
 
 	public Address(String street1, String street2, String city, String state, String zipCode) {
 		this.street1 = street1;
@@ -57,49 +60,6 @@ public class Address {
 	 * public void setParticipant(Participant participant) { this.participant =
 	 * participant; }
 	 */
-
-	public String getStreet1() {
-		return street1;
-	}
-
-	public void setStreet1(String street1) {
-		this.street1 = street1;
-	}
-
-	public String getStreet2() {
-		return street2;
-	}
-
-	public void setStreet2(String street2) {
-		this.street2 = street2;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public String getZipCode() {
-		return zipCode;
-	}
-
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
-	}
-	
-	private Date createDateTime;
-	private Date updateDateTime;
 
 	@PrePersist
 	protected void onCreate() {

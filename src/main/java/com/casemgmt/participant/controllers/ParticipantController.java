@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.casemgmt.participant.dto.ParticipantSearchParameters;
 import com.casemgmt.participant.entities.Participant;
 import com.casemgmt.participant.jpa.ParticipantRepository;
 
@@ -50,5 +51,9 @@ public class ParticipantController {
 	public List<Participant> getAllParticipantsByCity(@PathVariable String city) {
 		return repository.findByAddresses_City(city);
 	}
-
+	
+	@GetMapping("/participants/Search")
+	public List<Participant> getAllParticipantsByCity(@RequestBody ParticipantSearchParameters searchParam) {
+		return null;
+	}
 }

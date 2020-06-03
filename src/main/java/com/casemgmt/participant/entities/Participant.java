@@ -16,6 +16,19 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Version;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.Accessors;
+
+@Getter
+@Setter
+@Accessors(chain = true)
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 @Entity
 public class Participant {
 
@@ -27,41 +40,23 @@ public class Participant {
 	private String firstName;
 	@Column(nullable = false)
 	private String lastName;
-
 	private Date dateOfBirth;
 
 	@Version
 	private int version;
-
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
-	}
+	private Date createDateTime;
+	private Date updateDateTime;
 
 	@OneToMany(targetEntity = com.casemgmt.participant.entities.Address.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "participantId")
 	private List<Address> addresses;
-
-	public Date getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-
+	
 	public List<Address> getAddresses() {
 		return addresses;
 	}
 
 	public void setAddresses(List<Address> addresses) {
 		this.addresses = addresses;
-	}
-
-	public Participant() {
 	}
 
 	public Participant(String firstName, String lastName) {
@@ -73,21 +68,6 @@ public class Participant {
 	public String toString() {
 		return String.format("Participant[id=%d, firstName='%s', lastName='%s']", participantId, firstName, lastName);
 	}
-
-	public Long getParticipantId() {
-		return participantId;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	private Date createDateTime;
-	private Date updateDateTime;
 
 	@PrePersist
 	protected void onCreate() {
