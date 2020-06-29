@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,8 +33,7 @@ public class ParticipantController {
 
 	@GetMapping("/participants/{participantId}")
 	public Participant getParticipant(@PathVariable long participantId) {
-		return Optional
-				.ofNullable(repository.findByParticipantId(participantId))
+		return Optional.ofNullable(repository.findById(participantId))
 				.orElseThrow(() -> new RuntimeException("Not Found" + participantId));
 	}
 
@@ -41,19 +41,19 @@ public class ParticipantController {
 	public List<Participant> getAllParticipantsByName(@PathVariable String name) {
 		return repository.findByLastName(name);
 	}
-	
+
 	@GetMapping("/participants/findByStreet1/{street}")
 	public List<Participant> getAllParticipantsByStreet1(@PathVariable String street1) {
 		return repository.findByAddresses_Street1(street1);
 	}
-	
+
 	@GetMapping("/participants/findByCity/{city}")
 	public List<Participant> getAllParticipantsByCity(@PathVariable String city) {
 		return repository.findByAddresses_City(city);
 	}
-	
+
 	@GetMapping("/participants/Search")
-	public List<Participant> getAllParticipantsByCity(@RequestBody ParticipantSearchParameters searchParam) {
-		return null;
+	public List<Participant> getAllParticipantsBySearchParam(@RequestBody ParticipantSearchParameters searchParam, @RequestBody Pageable pageable) {
+		return repository.searchByParam(searchParam.firstName,searchParam.lastName, pageable);
 	}
 }

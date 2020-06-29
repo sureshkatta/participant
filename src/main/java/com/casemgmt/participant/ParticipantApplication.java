@@ -25,40 +25,38 @@ public class ParticipantApplication {
 		SpringApplication.run(ParticipantApplication.class);
 	}
 
+	
 	@Bean
 	public CommandLineRunner demo(ParticipantRepository repository) {
 		return (args) -> {
 
 			Participant[] persons = 
 			IntStream.range(0, 15).mapToObj(i -> {
-				Participant participant = new Participant("Jack" + i, "Bauer" + i);
+				Participant participant = new Participant();
+				participant.setFirstName("FN" + i);
+				participant.setLastName("LN" + i);
+				
+				Address address = 
+						Address.builder().street1(i + "01 Main").street2("Street").city("Cary").state("NC").zipCode("27519").build();
+				
 				List<Address> addresses = new ArrayList<>();
-				addresses.add(new Address(i + "01 Main", "Street", "Cary" + i, "NC", "23231"));
+				addresses.add(address);
 				participant.setAddresses(addresses);
 				return participant;
 			}).toArray(Participant[]::new);
 
 			Arrays.asList(persons).forEach((participant) -> repository.save(participant));
-			// save a few customers
-			/*
-			 * repository.save(new Participant("Jack", "Bauer")); repository.save(new
-			 * Participant("Chloe", "O'Brian")); repository.save(new Participant("Kim",
-			 * "Bauer")); repository.save(new Participant("David", "Palmer"));
-			 * repository.save(new Participant("Michelle", "Dessler"));
-			 */
-
+		
 			// fetch all customers
 			log.info("Participants found with findAll():");
 			log.info("-------------------------------");
 			for (Participant participant : repository.findAll()) {
 				log.info(participant.toString());
 			}
-			log.info("");
-			
-			
+			log.info("");			
 
 			// fetch an individual customer by ID
-			Participant participant = repository.findByParticipantId(1L);
+			Participant participant = repository.findById(1L);
 			log.info("Participant found with findById(1L):");
 			log.info("--------------------------------");
 			log.info(participant.toString());
@@ -67,11 +65,10 @@ public class ParticipantApplication {
 			// fetch customers by last name
 			log.info("Participant found with findByLastName('Bauer'):");
 			log.info("--------------------------------------------");
-			repository.findByLastName("Bauer").forEach(bauer -> log.info(bauer.toString()));
+			repository.findByLastName("LN").forEach(bauer -> log.info(bauer.toString()));
 
 			log.info("");
 
 		};
 	}
-
 }

@@ -7,27 +7,20 @@ import javax.persistence.Column;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.experimental.Accessors;
+import lombok.Data;
 
-@Getter
-@Setter
-@Accessors(chain = true)
-@NoArgsConstructor
-@ToString
+@Data
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ParticipantSearchParameters {
 	
-	private String firstName;
-	private String lastName;
-	private Date dateOfBirth;
-	private String street1;
-	private String street2;
-	private String city;
-	private String state;
-	private String zipCode;
+	public String firstName;
+	public String lastName;
+	public Date dateOfBirth;
+	
+	public String street1;
+	public String street2;
+	public String city;
+	public String state;
+	public String zipCode;
 }
