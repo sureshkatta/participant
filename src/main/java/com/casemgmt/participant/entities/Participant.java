@@ -34,7 +34,7 @@ public class Participant {
 	@NonNull String lastName = "";
 	Date dateOfBirth;
 
-	@OneToMany(targetEntity = com.casemgmt.participant.entities.Address.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = com.casemgmt.participant.entities.Address.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "participantId")
 	List<Address> addresses;
 	

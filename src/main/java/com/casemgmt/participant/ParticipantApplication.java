@@ -42,6 +42,7 @@ public class ParticipantApplication {
 				List<Address> addresses = new ArrayList<>();
 				addresses.add(address);
 				participant.setAddresses(addresses);
+				
 				return participant;
 			}).toArray(Participant[]::new);
 
