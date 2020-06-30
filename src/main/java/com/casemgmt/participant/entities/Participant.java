@@ -34,14 +34,14 @@ public class Participant {
 	@NonNull String lastName = "";
 	Date dateOfBirth;
 
+	@OneToMany(targetEntity = com.casemgmt.participant.entities.Address.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "participantId")
+	List<Address> addresses;
+	
 	@Version
 	int version;
 	@CreationTimestamp
 	Date createDateTime;
 	@UpdateTimestamp
 	Date updateDateTime;
-
-	@OneToMany(targetEntity = com.casemgmt.participant.entities.Address.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "participantId")
-	List<Address> addresses;
 }

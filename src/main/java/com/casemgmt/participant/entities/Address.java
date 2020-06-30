@@ -40,7 +40,7 @@ public class Address {
 	String city;
 	String state;
 	String zipCode;
-
+	
 	@Version
 	int version;
 	@CreationTimestamp

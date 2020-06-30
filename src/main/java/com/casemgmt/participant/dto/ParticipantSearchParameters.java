@@ -2,25 +2,21 @@ package com.casemgmt.participant.dto;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import lombok.Data;
 
 @Data
-@JsonInclude(value = JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class ParticipantSearchParameters {
 	
-	public String firstName;
-	public String lastName;
-	public Date dateOfBirth;
+	String firstName;
+	String lastName;
+	Date dateOfBirth;
 	
-	public String street1;
-	public String street2;
-	public String city;
-	public String state;
-	public String zipCode;
+	String street1;
+	String street2;
+	String city;
+	String state;
+	String zipCode;
 }

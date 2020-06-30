@@ -46,29 +46,6 @@ public class ParticipantApplication {
 			}).toArray(Participant[]::new);
 
 			Arrays.asList(persons).forEach((participant) -> repository.save(participant));
-		
-			// fetch all customers
-			log.info("Participants found with findAll():");
-			log.info("-------------------------------");
-			for (Participant participant : repository.findAll()) {
-				log.info(participant.toString());
-			}
-			log.info("");			
-
-			// fetch an individual customer by ID
-			Participant participant = repository.findById(1L);
-			log.info("Participant found with findById(1L):");
-			log.info("--------------------------------");
-			log.info(participant.toString());
-			log.info("");
-
-			// fetch customers by last name
-			log.info("Participant found with findByLastName('Bauer'):");
-			log.info("--------------------------------------------");
-			repository.findByLastName("LN").forEach(bauer -> log.info(bauer.toString()));
-
-			log.info("");
-
 		};
 	}
 }

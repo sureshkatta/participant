@@ -4,11 +4,17 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.casemgmt.participant.dto.ParticipantSearchParameters;
@@ -22,8 +28,15 @@ public class ParticipantController {
 	ParticipantRepository repository;
 
 	@GetMapping("/participants")
-	public List<Participant> getAllParticipants() {
-		return repository.findAll();
+	public ResponseEntity<List<Participant>> getAllParticipants(
+		@RequestParam(defaultValue = "0") Integer pageNo, 
+        @RequestParam(defaultValue = "5") Integer pageSize,
+        @RequestParam(defaultValue = "id") String sortBy) {
+	
+		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+		List<Participant> list = repository.findAll(paging);
+		
+		return new ResponseEntity<List<Participant>>(list, new HttpHeaders(), HttpStatus.OK); 
 	}
 
 	@PostMapping("/participants")
@@ -38,22 +51,27 @@ public class ParticipantController {
 	}
 
 	@GetMapping("/participants/findByName/{name}")
-	public List<Participant> getAllParticipantsByName(@PathVariable String name) {
-		return repository.findByLastName(name);
+	public ResponseEntity<List<Participant>> getAllParticipantsByName(
+			@PathVariable String name,
+			@RequestParam(defaultValue = "0") Integer pageNo, 
+	        @RequestParam(defaultValue = "5") Integer pageSize,
+	        @RequestParam(defaultValue = "id") String sortBy) {
+		
+		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+		List<Participant> list = repository.findByLastName(name, paging);
+		
+		return new ResponseEntity<List<Participant>>(list, new HttpHeaders(), HttpStatus.OK); 
 	}
 
-	@GetMapping("/participants/findByStreet1/{street}")
-	public List<Participant> getAllParticipantsByStreet1(@PathVariable String street1) {
-		return repository.findByAddresses_Street1(street1);
-	}
+	@PostMapping("/participants/Search")
+	public ResponseEntity<List<Participant>> getAllParticipantsBySearchParam(
+			@RequestBody ParticipantSearchParameters searchParam, @RequestParam(defaultValue = "0") Integer pageNo,
+			@RequestParam(defaultValue = "5") Integer pageSize, @RequestParam(defaultValue = "id") String sortBy) {
 
-	@GetMapping("/participants/findByCity/{city}")
-	public List<Participant> getAllParticipantsByCity(@PathVariable String city) {
-		return repository.findByAddresses_City(city);
-	}
+		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+		List<Participant> list = repository.searchByParam(searchParam.getFirstName(), searchParam.getLastName(),
+				searchParam.getStreet1(), paging);
 
-	@GetMapping("/participants/Search")
-	public List<Participant> getAllParticipantsBySearchParam(@RequestBody ParticipantSearchParameters searchParam, @RequestBody Pageable pageable) {
-		return repository.searchByParam(searchParam.firstName,searchParam.lastName, pageable);
+		return new ResponseEntity<List<Participant>>(list, new HttpHeaders(), HttpStatus.OK);
 	}
 }
