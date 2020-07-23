@@ -13,12 +13,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Past;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.casemgmt.participant.core.validators.intf.PhoneNumber;
+
 import lombok.Data;
-import lombok.NonNull;
 
 @Entity
 @Data
@@ -29,20 +32,29 @@ public class Participant {
 	Long Id;
 
 	@Column(nullable = false)
-	@NonNull String firstName = "";
+	@NotEmpty(message = "Please provide a first name")
+	String firstName = "";
+	
 	@Column(nullable = false)
-	@NonNull String lastName = "";
+	@NotEmpty(message = "Please provide a last name")
+	String lastName = "";
+	
 	String registeredName = "";
 	
+	@Past
 	Date dateOfBirth;
 	Date timeOfBirth;
+	
 	String birthPlace;
+	
 	String gender;
 	String race;
 	String religion;
 	String maritalStatus;
 	String militaryService;
 	
+	@PhoneNumber 
+	String phoneNumber = "";
 	//Attachment photo;
 	//
 	

@@ -2,15 +2,13 @@ package com.casemgmt.participant.entities;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Version;
+import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -18,12 +16,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.experimental.Accessors;
 
 @Data
 @NoArgsConstructor
@@ -35,10 +28,18 @@ public class Address {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	Long Id;
-	@NonNull String street1 = "";
+	
+	@Column(nullable = false)
+	@NotEmpty(message = "Please provide a street")
+	String street1 = "";
+	
 	String street2;
 	String city;
+	
+	@Column(nullable = false)
+	@NotEmpty(message = "Please provide a state")
 	String state;
+	
 	String zipCode;
 	
 	@Version

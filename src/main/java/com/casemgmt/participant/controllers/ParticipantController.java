@@ -3,6 +3,8 @@ package com.casemgmt.participant.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.casemgmt.participant.core.exceptions.RecordNotFoundException;
 import com.casemgmt.participant.dto.ParticipantSearchParameters;
 import com.casemgmt.participant.entities.Participant;
 import com.casemgmt.participant.jpa.ParticipantRepository;
@@ -40,14 +43,15 @@ public class ParticipantController {
 	}
 
 	@PostMapping("/participants")
-	Participant newParticipant(@RequestBody Participant newParticipant) {
+	Participant newParticipant(@Valid @RequestBody Participant newParticipant) {
+		
 		return repository.save(newParticipant);
 	}
 
 	@GetMapping("/participants/{participantId}")
 	public Participant getParticipant(@PathVariable long participantId) {
 		return Optional.ofNullable(repository.findById(participantId))
-				.orElseThrow(() -> new RuntimeException("Not Found" + participantId));
+				.orElseThrow(() -> new RecordNotFoundException(String.valueOf(participantId)));
 	}
 
 	@GetMapping("/participants/findByName/{name}")
