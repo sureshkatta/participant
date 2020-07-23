@@ -32,8 +32,20 @@ public class Participant {
 	@NonNull String firstName = "";
 	@Column(nullable = false)
 	@NonNull String lastName = "";
+	String registeredName = "";
+	
 	Date dateOfBirth;
-
+	Date timeOfBirth;
+	String birthPlace;
+	String gender;
+	String race;
+	String religion;
+	String maritalStatus;
+	String militaryService;
+	
+	//Attachment photo;
+	//
+	
 	@OneToMany(targetEntity = com.casemgmt.participant.entities.Address.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "participantId")
 	List<Address> addresses;

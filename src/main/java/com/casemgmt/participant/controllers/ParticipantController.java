@@ -31,7 +31,7 @@ public class ParticipantController {
 	public ResponseEntity<List<Participant>> getAllParticipants(
 		@RequestParam(defaultValue = "0") Integer pageNo, 
         @RequestParam(defaultValue = "5") Integer pageSize,
-        @RequestParam(defaultValue = "id") String sortBy) {
+        @RequestParam(defaultValue = "lastName") String sortBy) {
 	
 		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 		List<Participant> list = repository.findAll(paging);
