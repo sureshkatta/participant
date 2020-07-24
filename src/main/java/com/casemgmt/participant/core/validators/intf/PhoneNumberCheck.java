@@ -18,7 +18,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = PhoneNumberValidator.class)
 @Target({ METHOD, FIELD, ANNOTATION_TYPE })
 @Retention(RUNTIME)
-public @interface PhoneNumber {
+public @interface PhoneNumberCheck {
     String message() default "{state.message}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};

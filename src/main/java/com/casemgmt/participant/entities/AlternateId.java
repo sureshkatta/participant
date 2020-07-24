@@ -24,28 +24,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Address {
+public class AlternateId {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	Long Id;
 	
 	@Column(nullable = false)
-	@NotEmpty(message = "Please select an address type")
-	String addressType = "";
+	@NotEmpty(message = "Please select a type of ID")
+	String alternateIdType = "";
 	
-	@Column(nullable = false)
-	@NotEmpty(message = "Please provide a street")
-	String street1 = "";
-	
-	String street2;
-	String city;
-	
-	@Column(nullable = false)
-	@NotEmpty(message = "Please provide a state")
-	String state;
-	
-	String zipCode;
+	String alternateId = "";
 	
 	Instant startDate;
 	

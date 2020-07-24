@@ -10,9 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.casemgmt.participant.core.validators.intf.PhoneNumberCheck;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,28 +27,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Address {
+public class PhoneNumber {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	Long Id;
 	
 	@Column(nullable = false)
-	@NotEmpty(message = "Please select an address type")
-	String addressType = "";
+	@NotEmpty(message = "Please select an phone number type")
+	String phoneType = "";
 	
-	@Column(nullable = false)
-	@NotEmpty(message = "Please provide a street")
-	String street1 = "";
-	
-	String street2;
-	String city;
-	
-	@Column(nullable = false)
-	@NotEmpty(message = "Please provide a state")
-	String state;
-	
-	String zipCode;
+	@Pattern(regexp = "(\\d){3,3}-\\d{3,3}-\\d{2,4}", message = "The phone number must match 111-111-1111 format")
+	//@PhoneNumberCheck 
+	String phone = "";
 	
 	Instant startDate;
 	

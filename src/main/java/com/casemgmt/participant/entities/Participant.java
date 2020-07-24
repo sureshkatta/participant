@@ -19,8 +19,6 @@ import javax.validation.constraints.Past;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.casemgmt.participant.core.validators.intf.PhoneNumber;
-
 import lombok.Data;
 
 @Entity
@@ -53,14 +51,28 @@ public class Participant {
 	String maritalStatus;
 	String militaryService;
 	
-	@PhoneNumber 
-	String phoneNumber = "";
 	//Attachment photo;
 	//
 	
 	@OneToMany(targetEntity = com.casemgmt.participant.entities.Address.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "participantId")
 	List<Address> addresses;
+	
+	@OneToMany(targetEntity = com.casemgmt.participant.entities.EmailAddress.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "participantId")
+	List<EmailAddress> emailAddresses;
+	
+	@OneToMany(targetEntity = com.casemgmt.participant.entities.PhoneNumber.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "participantId")
+	List<PhoneNumber> phoneNumbers;
+	
+	@OneToMany(targetEntity = com.casemgmt.participant.entities.AlternateId.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "participantId")
+	List<AlternateId> alternateIds;
+	
+	@OneToMany(targetEntity = com.casemgmt.participant.entities.Alias.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "participantId")
+	List<Alias> aliases;
 	
 	@Version
 	int version;
